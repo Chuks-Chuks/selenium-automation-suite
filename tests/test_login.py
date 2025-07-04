@@ -1,26 +1,20 @@
-
-import sys
-sys.path.append('C:/Users/phili/selenium-exercise')
 from pages.login import Login
 from .base_test import BaseTest
-import logging
+import pytest 
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger()
 
+
+@pytest.mark.usefixtures('driver', 'logger')
 class TestLogin(BaseTest):
-    def test_login(self):
-        logging.info("Starting the test")
-        login = Login(driver=self.driver)
+    def test_login(self, logger, driver):
+        logger.info("Starting the test")
+        login = Login(driver=driver)
         login.login_user()
-        logging.info("logging attempted")
+        logger.info("logging attempted")
 
         # Adding a screenshot after successfully logging in
         self.driver.save_screenshot('../screenshots/passed/login_attempt.png')
 
-        logging.info("Screenshot saved.")
+        logger.info("Screenshot saved.")
 
-        assert 'Products' in self.driver.page_source
-
-
-# driver.quit()
+        assert 'Products' in driver.page_source

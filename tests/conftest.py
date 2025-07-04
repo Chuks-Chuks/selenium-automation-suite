@@ -8,12 +8,18 @@ from selenium.webdriver.edge.options import Options as EdgeOptions
 from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.firefox import GeckoDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
+from utils.logger import setup_logger
 
+
+@pytest.fixture
+def logger(request):
+    test_name = request.node.name
+    return setup_logger(test_name)
 
 
 def pytest_addoption(parser):
     parser.addoption(
-        "--browser", action="store", default="chrome", help="Browser to run tests: chrome or firefox or edge or headless"
+        "--browser", action="store", default="chrome", help="Browser to run tests: chrome or edge or headless"
     )
 
 
@@ -31,9 +37,6 @@ def driver(request):
         edge_options.add_experimental_option('detach', True)
         driver = webdriver.Edge(service=edgeservice(EdgeChromiumDriverManager().install()), options=edge_options)
         
-    elif browser == 'firefox':
-        driver = webdriver.Firefox(service=firefoxservice(GeckoDriverManager().install()))
-
     elif browser == 'headless':
         options = webdriver.ChromeOptions()
         options.add_argument('--headless')
@@ -46,7 +49,7 @@ def driver(request):
     yield driver
     driver.quit()
 
-@pytest.hookimpl(hookwrapper=True)
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
 def pytest_runtest_makereport(item, call):
     outcome = yield
     result = outcome.get_result()
