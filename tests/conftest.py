@@ -46,16 +46,17 @@ def driver(request):
         raise ValueError(f'Browser type not supported {browser}')
     
     driver.maximize_window()
+    request.node._driver = driver
     yield driver
     driver.quit()
 
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):
+def pytest_runtest_makereport(item):
     outcome = yield
     result = outcome.get_result()
 
     if result.when == 'call' and result.failed:
-        driver = item.funcargs.get('driver')
+        driver = getattr(item, '_driver', None)
         if driver:
             os.makedirs('../screenshots/failed/', exist_ok=True)
             filename = f'screenshots/failed/{item.name}.png'

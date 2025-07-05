@@ -12,9 +12,9 @@ class TestLogin(BaseTest):
         login.login_user()
         logger.info("logging attempted")
 
-        # Adding a screenshot after successfully logging in
-        self.driver.save_screenshot('../screenshots/passed/login_attempt.png')
+        # # Adding a screenshot after successfully logging in
+        # self.driver.save_screenshot('../screenshots/passed/login_attempt.png')
 
         logger.info("Screenshot saved.")
 
-        assert 'Products' in driver.page_source
+        assert 'Naira' in driver.page_source
