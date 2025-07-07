@@ -1,0 +1,4 @@
+2025-07-07 06:54:52,156 - INFO -Starting browser and filling out forms
+2025-07-07 06:54:54,388 - INFO -asserting dob text field is a string
+2025-07-07 06:54:55,049 - INFO -Finalising form and taking screenshot
+2025-07-07 06:54:55,307 - INFO -Process completed.

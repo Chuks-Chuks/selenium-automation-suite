@@ -59,5 +59,5 @@ def pytest_runtest_makereport(item):
         driver = getattr(item, '_driver', None)
         if driver:
             os.makedirs('../screenshots/failed/', exist_ok=True)
-            filename = f'screenshots/failed/{item.name}.png'
+            filename = f'../screenshots/failed/{item.name}.png'
             driver.save_screenshot(filename)
