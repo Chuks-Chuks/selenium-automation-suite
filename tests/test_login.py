@@ -6,6 +6,9 @@ import pytest
 
 @pytest.mark.usefixtures('driver', 'logger')
 class TestLogin(BaseTest):
+
+    @pytest.mark.smoke
+    @pytest.mark.login
     def test_login(self, logger, driver):
         logger.info("Starting the test")
         login = Login(driver=driver)

@@ -5,6 +5,8 @@ import pytest
 @pytest.mark.usefixtures('driver', 'logger')
 class TestForms:
     
+    @pytest.mark.smoke
+    @pytest.mark.forms
     def test_forms(self, driver, logger):
         forms = Forms(driver=driver)
         logger.info('Starting browser and filling out forms')
